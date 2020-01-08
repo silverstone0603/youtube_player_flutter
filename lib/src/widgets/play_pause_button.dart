@@ -15,10 +15,14 @@ class PlayPauseButton extends StatefulWidget {
   /// Defines placeholder widget to show when player is in buffering state.
   final Widget bufferIndicator;
 
+  /// Modify the widget size.
+  final double size;
+
   /// Creates [PlayPauseButton] widget.
   PlayPauseButton({
     this.controller,
     this.bufferIndicator,
+    this.size = 0.0,
   });
 
   @override
@@ -29,6 +33,7 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
     with TickerProviderStateMixin {
   YoutubePlayerController _controller;
   AnimationController _animController;
+  double get _size => widget.size;
 
   @override
   void initState() {
@@ -72,8 +77,8 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
     if (_controller.value.playerState == PlayerState.buffering) {
       return widget.bufferIndicator ??
           Container(
-            width: 70.0,
-            height: 70.0,
+            width: _size>0 ? _size : 70.0,
+            height: _size>0 ? _size : 70.0,
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation(Colors.white),
             ),
@@ -94,7 +99,7 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
               icon: AnimatedIcons.play_pause,
               progress: _animController.view,
               color: Colors.white,
-              size: 60.0,
+              size: _size>0 ? _size : 60.0,
             ),
           ),
         ),

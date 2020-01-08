@@ -80,11 +80,12 @@ class _MyHomePageState extends State<MyHomePage> {
       initialVideoId: 'QFlRzcZoNoA',
       flags: YoutubePlayerFlags(
         mute: false,
-        autoPlay: true,
-        disableDragSeek: false,
+        autoPlay: false,
+        disableDragSeek: true,
         loop: false,
         isLive: false,
         forceHideAnnotation: true,
+        hideCenterPlayControl: true,
       ),
     )..addListener(listener);
     _idController = TextEditingController();
@@ -149,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           YoutubePlayer(
             controller: _controller,
-            showVideoProgressIndicator: true,
+            showVideoProgressIndicator: false,
             progressIndicatorColor: Colors.blueAccent,
             topActions: <Widget>[
               SizedBox(width: 8.0),

@@ -7,7 +7,22 @@ class YoutubePlayerFlags {
   /// If set to true, hides the controls.
   ///
   /// Default is false.
-  final bool hideControls;
+  final bool hideAllControls;
+
+  /// If set to true, hide the FullScreen control.
+  /// 
+  /// Default is false
+  final bool hideFullScreen;
+
+  /// If set to true, hide the Playback Speed control.
+  /// 
+  /// Default is false
+  final bool hidePlaybackSpeed;
+
+  /// If set to true, hide the Center Play/Pause control. (without first play moment)
+  /// 
+  /// Default is false
+  final bool hideCenterPlayControl;
 
   /// Is set to true, controls will be visible at start.
   ///
@@ -66,7 +81,10 @@ class YoutubePlayerFlags {
 
   /// Creates [YoutubePlayerFlags].
   const YoutubePlayerFlags({
-    this.hideControls = false,
+    this.hideAllControls = false,
+    this.hideFullScreen = false,
+    this.hidePlaybackSpeed = false,
+    this.hideCenterPlayControl = false,
     this.controlsVisibleAtStart = false,
     this.autoPlay = true,
     this.mute = false,
@@ -81,7 +99,10 @@ class YoutubePlayerFlags {
 
   /// Copies new values assigned to the [YoutubePlayerFlags].
   YoutubePlayerFlags copyWith({
-    bool hideControls,
+    bool hideAllControls,
+    bool hideFullScreen,
+    bool hidePlaybackSpeed,
+    bool hideCenterPlayControl,
     bool autoPlay,
     bool mute,
     bool showVideoProgressIndicator,
@@ -99,7 +120,10 @@ class YoutubePlayerFlags {
       disableDragSeek: disableDragSeek ?? this.disableDragSeek,
       enableCaption: enableCaption ?? this.enableCaption,
       forceHideAnnotation: forceHideAnnotation ?? this.forceHideAnnotation,
-      hideControls: hideControls ?? this.hideControls,
+      hideAllControls: hideAllControls ?? this.hideAllControls,
+      hideFullScreen: hideFullScreen ?? this.hideFullScreen,
+      hidePlaybackSpeed: hidePlaybackSpeed ?? this.hidePlaybackSpeed,
+      hideCenterPlayControl: hideCenterPlayControl ?? this.hideCenterPlayControl,
       hideThumbnail: hideThumbnail ?? this.hideThumbnail,
       isLive: isLive ?? this.isLive,
       loop: loop ?? this.loop,

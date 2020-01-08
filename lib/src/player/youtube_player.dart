@@ -194,6 +194,10 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
   double _aspectRatio;
   bool _initialLoad = true;
 
+  /// Determines if playback has been made since the first creation.
+  ///
+  bool isOnToPlayed = false;
+
   @override
   void initState() {
     super.initState();
@@ -211,7 +215,10 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
   void listener() async {
     if (controller.value.isReady && _initialLoad) {
       _initialLoad = false;
-      if (controller.flags.autoPlay) controller.play();
+      if (controller.flags.autoPlay) {
+        controller.play();
+        isOnToPlayed == true;
+      }
       if (controller.flags.mute) controller.mute();
       if (widget.onReady != null) widget.onReady();
       if (controller.flags.controlsVisibleAtStart) {
@@ -364,7 +371,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                       ),
               ),
             ),
-          if (!controller.flags.hideControls &&
+          if (!controller.flags.hideAllControls &&
               controller.value.position > Duration(milliseconds: 100) &&
               !controller.value.isControlsVisible &&
               widget.showVideoProgressIndicator &&
@@ -385,7 +392,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                 ),
               ),
             ),
-          if (!controller.flags.hideControls) ...[
+          if (!controller.flags.hideAllControls) ...[
             TouchShutter(
               disableDragSeek: controller.flags.disableDragSeek,
               timeOut: widget.controlsTimeOut,
@@ -395,7 +402,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
               left: 0,
               right: 0,
               child: AnimatedOpacity(
-                opacity: !controller.flags.hideControls &&
+                opacity: !controller.flags.hideAllControls &&
                         controller.value.isControlsVisible
                     ? 1
                     : 0,
@@ -410,12 +417,23 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                           children: widget.bottomActions ??
                               [
                                 SizedBox(width: 14.0),
+                                // PlayPauseButton(
+                                //   size: 20,
+                                // ),
+                                // SizedBox(
+                                //   width: 8.0,
+                                // ),
                                 CurrentPosition(),
                                 SizedBox(width: 8.0),
                                 ProgressBar(isExpanded: true),
-                                RemainingDuration(),
-                                PlaybackSpeedButton(),
-                                FullScreenButton(),
+                                TotalDuration(), // RemainingDuration(),
+                                !controller.flags.hidePlaybackSpeed
+                                    ? SizedBox()
+                                    : PlaybackSpeedButton(),
+                                !controller.flags.hideFullScreen
+                                    ? SizedBox()
+                                    : FullScreenButton(),
+                                SizedBox(width: 14.0),
                               ],
                         ),
                       ),
@@ -426,7 +444,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
               left: 0,
               right: 0,
               child: AnimatedOpacity(
-                opacity: !controller.flags.hideControls &&
+                opacity: !controller.flags.hideAllControls &&
                         controller.value.isControlsVisible
                     ? 1
                     : 0,
@@ -440,10 +458,17 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
               ),
             ),
           ],
-          if (!controller.flags.hideControls)
-            Center(
-              child: PlayPauseButton(),
-            ),
+          if (!controller.flags.hideAllControls)
+            controller.flags.hideCenterPlayControl
+                ? SizedBox()
+                : GestureDetector(
+                    onTap: () {
+                      isOnToPlayed = true;
+                    },
+                    child: Center(
+                      child: PlayPauseButton(),
+                    ),
+                  ),
           if (controller.value.hasError) errorWidget,
         ],
       ),

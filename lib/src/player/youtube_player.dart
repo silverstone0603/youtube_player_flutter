@@ -6,6 +6,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:youtube_player_flutter/src/widgets/loading_widget.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../enums/thumbnail_quality.dart';
 import '../utils/errors.dart';
@@ -74,6 +76,8 @@ class YoutubePlayer extends StatefulWidget {
   /// Overrides the default buffering indicator for the player.
   /// {@endtemplate}
   final Widget bufferIndicator;
+  final Color bufferIndicatorColor;
+  final double bufferIndicatorSize;
 
   /// {@template youtube_player_flutter.progressColors}
   /// Overrides default colors of the progress bar, takes [ProgressColors].
@@ -152,6 +156,8 @@ class YoutubePlayer extends StatefulWidget {
     this.actionsPadding = const EdgeInsets.all(8.0),
     this.thumbnailUrl,
     this.showVideoProgressIndicator = false,
+    this.bufferIndicatorColor = Colors.white,
+    this.bufferIndicatorSize = 30.0
   });
 
   /// Converts fully qualified YouTube Url to video id.
@@ -193,6 +199,9 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
 
   double _aspectRatio;
   bool _initialLoad = true;
+
+  Color get _bufferIndicatorColor => widget.bufferIndicatorColor;
+  double get _bufferIndicatorSize => widget.bufferIndicatorSize;
 
   /// Determines if playback has been made since the first creation.
   ///
@@ -459,16 +468,24 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
             ),
           ],
           if (!controller.flags.hideAllControls)
-            controller.flags.hideCenterPlayControl
-                ? SizedBox()
-                : GestureDetector(
-                    onTap: () {
-                      isOnToPlayed = true;
-                    },
-                    child: Center(
-                      child: PlayPauseButton(),
+            controller.value.playerState == PlayerState.buffering
+                ? Center(
+                    child: LoadingWidget(
+                      controller: controller,
+                      color: _bufferIndicatorColor,
+                      size: _bufferIndicatorSize,
                     ),
-                  ),
+                  )
+                : (!controller.flags.hideCenterPlayControl
+                    ? GestureDetector(
+                        onTap: () {
+                          isOnToPlayed = true;
+                        },
+                        child: Center(
+                          child: PlayPauseButton(),
+                        ),
+                      )
+                    : Container()),
           if (controller.value.hasError) errorWidget,
         ],
       ),

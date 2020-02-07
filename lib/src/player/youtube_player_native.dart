@@ -26,7 +26,7 @@ import 'raw_youtube_player_native.dart';
 /// Using YoutubePlayer widget:
 ///
 /// ```dart
-/// YoutubePlayer(
+/// YoutubePlayerNative(
 ///    context: context,
 ///    initialVideoId: "iLnmTe5Q2Qw",
 ///    flags: YoutubePlayerFlags(

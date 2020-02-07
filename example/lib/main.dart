@@ -85,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
         loop: false,
         isLive: false,
         forceHideAnnotation: true,
-        hideCenterPlayControl: true,
       ),
     )..addListener(listener);
     _idController = TextEditingController();

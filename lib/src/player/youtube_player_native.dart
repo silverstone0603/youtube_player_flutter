@@ -368,7 +368,7 @@ class _YoutubePlayerNativeState extends State<YoutubePlayerNative> {
               duration: Duration(milliseconds: 300),
               child: Image.network(
                 widget.thumbnailUrl ??
-                    YoutubePlayer.getThumbnail(
+                    YoutubePlayerNative.getThumbnail(
                       videoId: controller.metadata.videoId.isEmpty
                           ? controller.initialVideoId
                           : controller.metadata.videoId,

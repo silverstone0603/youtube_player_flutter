@@ -1,28 +1,64 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-import 'video_list.dart';
-
-void main() {
+Future main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.blueAccent,
     ),
   );
-  runApp(YoutubePlayerDemoApp());
+  runApp(YoutubePlayerDemoNativeApp());
 }
 
-/// Creates [YoutubePlayerDemoApp] widget.
-class YoutubePlayerDemoApp extends StatefulWidget {
+class YoutubePlayerDemoNativeApp extends StatefulWidget {  
   @override
-  _YoutubePlayerDemoAppState createState() => new _YoutubePlayerDemoAppState();
+  _YoutubePlayerDemoNativeAppState createState() => _YoutubePlayerDemoNativeAppState();
 }
 
-class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
+class _YoutubePlayerDemoNativeAppState extends State<YoutubePlayerDemoNativeApp>{
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Youtube Player Flutter (for Native Player)',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          color: Colors.blueAccent,
+          textTheme: TextTheme(
+            title: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w300,
+              fontSize: 20.0,
+            ),
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.blueAccent,
+        ),
+      ),
+      home: MyNativeHome(),
+    );
+  }
+}
+
+class MyNativeHome extends StatefulWidget {
+  @override
+  _MyNativeHomeState createState() => _MyNativeHomeState();
+}
+
+class _MyNativeHomeState extends State<MyNativeHome> {
   InAppWebViewController webView;
   String url = "";
   double progress = 0;
@@ -41,6 +77,7 @@ class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("InAppWebView")),
+      // drawer: myDrawer(context: context),
       body: Container(
         child: Column(
           children: <Widget>[
@@ -60,7 +97,7 @@ class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.blueAccent)),
                 child: InAppWebView(
-                  initialUrl: "https://theqoos.com/",
+                  initialUrl: "https://flutter.dev/",
                   initialHeaders: {},
                   initialOptions: InAppWebViewWidgetOptions(
                     iosInAppWebViewOptions: IosInAppWebViewOptions(

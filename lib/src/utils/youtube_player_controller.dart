@@ -1,9 +1,9 @@
-// Copyright 2019 Sarbagya Dhaubanjar. All rights reserved.
+// Copyright 2020 Sarbagya Dhaubanjar. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 import 'package:flutter/widgets.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_media/webview_flutter.dart';
 
 import '../enums/playback_rate.dart';
 import '../enums/player_state.dart';
@@ -174,11 +174,9 @@ class YoutubePlayerController extends ValueNotifier<YoutubePlayerValue> {
         super(YoutubePlayerValue());
 
   /// Finds [YoutubePlayerController] in the provided context.
-  static YoutubePlayerController of(BuildContext context) {
-    InheritedYoutubePlayer _player =
-        context.inheritFromWidgetOfExactType(InheritedYoutubePlayer);
-    return _player?.controller;
-  }
+  factory YoutubePlayerController.of(BuildContext context) => context
+      .dependOnInheritedWidgetOfExactType<InheritedYoutubePlayer>()
+      ?.controller;
 
   _callMethod(String methodString) {
     if (value.isReady) {

@@ -5,12 +5,10 @@ export 'src/enums/player_state.dart';
 export 'src/enums/thumbnail_quality.dart';
 
 export 'src/player/youtube_player.dart';
-export 'src/player/youtube_player_native.dart';
 
 export 'src/utils/youtube_meta_data.dart';
 
 export 'src/utils/youtube_player_controller.dart';
-export 'src/utils/youtube_player_controller_native.dart';
 
 export 'src/utils/youtube_player_flags.dart';
 export 'src/widgets/widgets.dart';

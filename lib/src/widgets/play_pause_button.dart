@@ -1,4 +1,4 @@
-// Copyright 2019 Sarbagya Dhaubanjar. All rights reserved.
+// Copyright 2020 Sarbagya Dhaubanjar. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -74,18 +74,10 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
 
   @override
   Widget build(BuildContext context) {
-    if (_controller.value.playerState == PlayerState.buffering) {
-      return widget.bufferIndicator ??
-          Container(
-            width: _size>0 ? _size : 70.0,
-            height: _size>0 ? _size : 70.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(Colors.white),
-            ),
-          );
-    } else {
+    final _playerState = _controller.value.playerState;
+    if ((!_controller.flags.autoPlay && _controller.value.isReady) || _playerState == PlayerState.playing || _playerState == PlayerState.paused){
       return Visibility(
-        visible: _controller.value.playerState == PlayerState.cued ||
+        visible: _playerState == PlayerState.cued ||
             !_controller.value.isPlaying ||
             _controller.value.isControlsVisible,
         child: Material(
@@ -105,5 +97,13 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
         ),
       );
     }
+    return widget.bufferIndicator ??
+        Container(
+          width: 70.0,
+          height: 70.0,
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(Colors.white),
+          ),
+        );
   }
 }

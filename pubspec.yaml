@@ -11,7 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   webview_media: ">=0.1.1 <1.0.0"
-  flutter_inappwebview: ^2.1.0+1
   flutter_spinkit: ^2.1.0
 
 dev_dependencies:

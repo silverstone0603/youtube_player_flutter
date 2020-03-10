@@ -6,7 +6,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:webview_media/webview_flutter.dart';
-import 'package:youtube_player_flutter/src/widgets/loading_widget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../enums/thumbnail_quality.dart';
@@ -203,8 +202,6 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
   Color get _bufferIndicatorColor => widget.bufferIndicatorColor;
   double get _bufferIndicatorSize => widget.bufferIndicatorSize;
 
-  /// Determines if playback has been made since the first creation.
-  ///
   bool isOnToPlayed = false;
 
   @override
@@ -224,7 +221,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
   void listener() async {
     if (controller.value.isReady && _initialLoad) {
       _initialLoad = false;
-      if (controller.flags.autoPlay) {
+      if (controller.flags.autoPlay){
         controller.play();
         isOnToPlayed == true;
       }
@@ -425,12 +422,6 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                           children: widget.bottomActions ??
                               [
                                 SizedBox(width: 14.0),
-                                // PlayPauseButton(
-                                //   size: 20,
-                                // ),
-                                // SizedBox(
-                                //   width: 8.0,
-                                // ),
                                 CurrentPosition(),
                                 SizedBox(width: 8.0),
                                 ProgressBar(isExpanded: true),
@@ -438,10 +429,10 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                                 !controller.flags.hidePlaybackSpeed
                                     ? SizedBox()
                                     : PlaybackSpeedButton(),
+                                PlaybackSpeedButton(),
                                 !controller.flags.hideFullScreen
                                     ? SizedBox()
                                     : FullScreenButton(),
-                                SizedBox(width: 14.0),
                               ],
                         ),
                       ),
@@ -475,16 +466,18 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                       size: _bufferIndicatorSize,
                     ),
                   )
-                : (!controller.flags.hideCenterPlayControl
-                    ? GestureDetector(
-                        onTap: () {
-                          isOnToPlayed = true;
-                        },
-                        child: Center(
-                          child: PlayPauseButton(),
-                        ),
-                      )
-                    : Container()),
+            : (
+              !controller.flags.hideCenterPlayControl
+              ? GestureDetector(
+                  onTap: () {
+                    isOnToPlayed = true;
+                  },
+                  child: Center(
+                    child: PlayPauseButton(),
+                  ),
+                )
+              : Container()
+              ),
           if (controller.value.hasError) errorWidget,
         ],
       ),

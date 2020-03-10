@@ -21,7 +21,6 @@ class YoutubePlayerValue {
     this.hasPlayed = false,
     this.position = const Duration(),
     this.buffered = 0.0,
-    this.bufferedRange = const <dynamic>[],
     this.isPlaying = false,
     this.isFullScreen = false,
     this.volume = 100,
@@ -49,7 +48,6 @@ class YoutubePlayerValue {
 
   /// The position up to which the video is buffered.i
   final double buffered;
-  final List<dynamic> bufferedRange;
 
   /// Reports true if video is playing.
   final bool isPlaying;
@@ -98,7 +96,6 @@ class YoutubePlayerValue {
     bool hasPlayed,
     Duration position,
     double buffered,
-    List<dynamic> bufferedRange,
     bool isPlaying,
     bool isFullScreen,
     double volume,
@@ -117,7 +114,6 @@ class YoutubePlayerValue {
       hasPlayed: hasPlayed ?? this.hasPlayed,
       position: position ?? this.position,
       buffered: buffered ?? this.buffered,
-      bufferedRange: buffered ?? this.bufferedRange,
       isPlaying: isPlaying ?? this.isPlaying,
       isFullScreen: isFullScreen ?? this.isFullScreen,
       volume: volume ?? this.volume,
@@ -140,7 +136,6 @@ class YoutubePlayerValue {
         'isControlsVisible: $isControlsVisible, '
         'position: ${position.inSeconds} sec. , '
         'buffered: $buffered, '
-        'buffered: [${bufferedRange.join(', ')}], '
         'isPlaying: $isPlaying, '
         'volume: $volume, '
         'playerState: $playerState, '
